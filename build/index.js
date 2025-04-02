@@ -21,9 +21,6 @@ const app = (0, express_1.default)();
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
 app.use("/api/uploads", express_1.default.static(path_1.default.join(__dirname, "../", "uploads")));
-app.use("/", (req, res) => {
-    res.status(200).json({ message: "Server is up and running" });
-});
 // const connectMongodb = require("./conn/connection.js");
 //?connection
 (0, connection_1.connectMongodb)(DB_URL);
@@ -36,6 +33,9 @@ app.use("/api/review", review_route_1.default);
 app.use("/api/cart", cart_route_1.default);
 app.use("/api/wishlist", wishlist_route_1.default);
 app.use("/api/order", order_routes_1.default);
+app.use("/", (req, res) => {
+    res.status(200).json({ message: "Server is up and running" });
+});
 //?handle not found
 app.all("*", (req, res, next) => {
     const message = `cannot ${req.method} on ${req.originalUrl}`;
