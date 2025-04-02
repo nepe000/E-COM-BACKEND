@@ -18,10 +18,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/api/uploads", express.static(path.join(__dirname, "../", "uploads")));
 
-app.use("/", (req: Request, res: Response) => {
-  res.status(200).json({ message: "Server is up and running" });
-});
-
 // const connectMongodb = require("./conn/connection.js");
 //?connection
 connectMongodb(DB_URL);
@@ -36,6 +32,10 @@ app.use("/api/review", reviewRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/wishlist", wishListRoute);
 app.use("/api/order", orderRoute);
+
+app.use("/", (req: Request, res: Response) => {
+  res.status(200).json({ message: "Server is up and running" });
+});
 
 //?handle not found
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
