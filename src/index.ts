@@ -11,6 +11,7 @@ import reviewRoutes from "./route/review.route";
 import cartRoutes from "./route/cart.route";
 import wishListRoute from "./route/wishlist.route";
 import orderRoute from "./route/order.routes";
+import cors from "cors";
 
 import path from "path";
 const app = express();
@@ -33,6 +34,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/wishlist", wishListRoute);
 app.use("/api/order", orderRoute);
 
+app.use(cors());
 app.use("/", (req: Request, res: Response) => {
   res.status(200).json({ message: "Server is up and running" });
 });

@@ -16,6 +16,7 @@ const review_route_1 = __importDefault(require("./route/review.route"));
 const cart_route_1 = __importDefault(require("./route/cart.route"));
 const wishlist_route_1 = __importDefault(require("./route/wishlist.route"));
 const order_routes_1 = __importDefault(require("./route/order.routes"));
+const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 app.use(express_1.default.urlencoded({ extended: false }));
@@ -33,6 +34,7 @@ app.use("/api/review", review_route_1.default);
 app.use("/api/cart", cart_route_1.default);
 app.use("/api/wishlist", wishlist_route_1.default);
 app.use("/api/order", order_routes_1.default);
+app.use((0, cors_1.default)());
 app.use("/", (req, res) => {
     res.status(200).json({ message: "Server is up and running" });
 });
