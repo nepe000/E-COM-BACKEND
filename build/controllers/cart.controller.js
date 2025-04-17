@@ -18,17 +18,14 @@ const middleware_1 = __importDefault(require("../middlewaare/middleware"));
 const cart_model_1 = __importDefault(require("../models/cart.model"));
 const product_model_1 = __importDefault(require("../models/product.model"));
 exports.create = (0, aynchandler_utils_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId, productId, quantity } = req.body;
+    const { productId, quantity } = req.body;
     let cart;
-    if (!userId) {
-        throw new middleware_1.default("User ID is required", 404);
-    }
     if (!productId) {
         throw new middleware_1.default("Product ID is required", 404);
     }
-    cart = yield cart_model_1.default.findOne({ user: userId });
+    cart = yield cart_model_1.default.findOne({ product: productId });
     if (!cart) {
-        cart = new cart_model_1.default({ user: userId, items: [] });
+        cart = new cart_model_1.default({ product: productId, items: [] });
     }
     const product = yield product_model_1.default.findById(productId);
     if (!product) {

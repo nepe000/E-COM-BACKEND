@@ -9,9 +9,9 @@ import { getPaginationData } from "../utils/pagination.utils";
 export const createRev = asyncHandler(async (req: Request, res: Response) => {
   const body = req.body;
   const user = req.user;
-  const { productId, rating, review } = body;
+  const { productId, rating } = body;
   if (!productId) {
-    throw new CustomError("userid and product id are required", 400);
+    throw new CustomError(" product id are required", 400);
   }
   const product = await Product.findById(productId);
 

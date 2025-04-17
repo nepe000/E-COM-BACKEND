@@ -20,24 +20,23 @@ const Authenticate = (roles) => {
     return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         try {
-            const authHeader = req.headers["authorization"];
+            const authHeader = Array.isArray(req.headers["authorization"])
+                ? req.headers["authorization"][0]
+                : req.headers["authorization"];
             if (!authHeader || !authHeader.startsWith("Bearer ")) {
-                throw new middleware_1.default("Unauthorized , authorization header is missing", 401);
+                throw new middleware_1.default("Unauthorized, authorization header is missing", 401);
             }
             const access_token = authHeader.split(" ")[1];
-            console.log("🚀 ~ return ~ access_token:", access_token);
             if (!access_token) {
                 throw new middleware_1.default("Unauthorized access denied", 401);
             }
             const decoded = (0, jwt_util_1.verifyToken)(access_token);
-            console.log("Decoded Token:", decoded);
             if (!decoded.exp || decoded.exp * 1000 < Date.now()) {
                 throw new middleware_1.default("Token expired, please login again", 401);
             }
             const user = yield model_1.default.findById(decoded._id);
-            console.log("Fetched User from DB:", user); // Check if the user is fetched correctly
             if (!user) {
-                throw new middleware_1.default("User not found , Please register the user", 404);
+                throw new middleware_1.default("User not found, Please register the user", 404);
             }
             if (roles && !roles.includes(user.role)) {
                 throw new middleware_1.default(`Forbidden: ${user.role} cannot access this resource`, 403);

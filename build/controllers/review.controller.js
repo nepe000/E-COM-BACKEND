@@ -22,9 +22,9 @@ exports.createRev = (0, aynchandler_utils_1.asyncHandler)((req, res) => __awaite
     var _a;
     const body = req.body;
     const user = req.user;
-    const { productId, rating, review } = body;
+    const { productId, rating } = body;
     if (!productId) {
-        throw new middleware_1.default("userid and product id are required", 400);
+        throw new middleware_1.default(" product id are required", 400);
     }
     const product = yield product_model_1.default.findById(productId);
     if (!product) {

@@ -7,19 +7,17 @@ import Cart from "../models/cart.model";
 import Product from "../models/product.model";
 
 export const create = asyncHandler(async (req: Request, res: Response) => {
-  const { userId, productId, quantity } = req.body;
+  const { productId, quantity } = req.body;
   let cart;
-  if (!userId) {
-    throw new CustomError("User ID is required", 404);
-  }
+
   if (!productId) {
     throw new CustomError("Product ID is required", 404);
   }
 
-  cart = await Cart.findOne({ user: userId });
+  cart = await Cart.findOne({ product: productId });
 
   if (!cart) {
-    cart = new Cart({ user: userId, items: [] });
+    cart = new Cart({ product: productId, items: [] });
   }
   const product = await Product.findById(productId);
   if (!product) {

@@ -9,11 +9,11 @@ const authentication_middleware_1 = require("../middlewaare/authentication.middl
 const gloabl_types_1 = require("../@types/gloabl.types");
 const router = express_1.default.Router();
 //?register user
-router.post("/", user_controller_1.register);
+router.post("/", (0, authentication_middleware_1.Authenticate)(gloabl_types_1.allUser), user_controller_1.register);
 //?update user
-router.put("/:id", (0, authentication_middleware_1.Authenticate)(gloabl_types_1.onlyUser), user_controller_1.update);
+router.put("/:id", (0, authentication_middleware_1.Authenticate)(gloabl_types_1.allUser), user_controller_1.update);
 //?login user
 router.post("/login", user_controller_1.login);
 //?get user
-router.get("/", (0, authentication_middleware_1.Authenticate)(gloabl_types_1.onlyUser), user_controller_1.getUsers);
+router.get("/", (0, authentication_middleware_1.Authenticate)(gloabl_types_1.allUser), user_controller_1.getUsers);
 exports.default = router;

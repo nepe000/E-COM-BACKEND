@@ -6,20 +6,20 @@ import {
   update,
 } from "../controllers/user.controller";
 import { Authenticate } from "../middlewaare/authentication.middleware";
-import { onlyAdmin, onlyUser } from "../@types/gloabl.types";
+import { onlyAdmin, onlyUser, allUser } from "../@types/gloabl.types";
 
 const router = express.Router();
 
 //?register user
-router.post("/", register);
+router.post("/", Authenticate(allUser), register);
 
 //?update user
-router.put("/:id", Authenticate(onlyUser), update);
+router.put("/:id", Authenticate(allUser), update);
 
 //?login user
 router.post("/login", login);
 
 //?get user
-router.get("/", Authenticate(onlyUser), getUsers);
+router.get("/", Authenticate(allUser), getUsers);
 
 export default router;
