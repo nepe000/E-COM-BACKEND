@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Role } from "./gloabl.types";
+import { Role } from "./global.types";
 
 export interface iPayload {
   _id: mongoose.Types.ObjectId;

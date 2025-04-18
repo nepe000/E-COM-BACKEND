@@ -1,5 +1,5 @@
 import express from "express";
-import { allUser, onlyAdmin } from "../@types/gloabl.types";
+import { allUser, onlyAdmin } from "../@types/global.types";
 import { Authenticate } from "../middlewaare/authentication.middleware";
 import {
   create,
@@ -53,7 +53,7 @@ router.delete("/:id", Authenticate(onlyAdmin), deletePro);
 // Create a product
 router.post(
   "/",
-  Authenticate(onlyAdmin),
+  Authenticate(allUser),
   upload.fields([
     { name: "coverImage", maxCount: 1 },
     { name: "images", maxCount: 6 },

@@ -6,7 +6,7 @@ import {
   removeProductFromWishList,
 } from "../controllers/wishlist.controller";
 import { Authenticate } from "../middlewaare/authentication.middleware";
-import { onlyUser } from "../@types/gloabl.types";
+import { onlyUser } from "../@types/global.types";
 
 const router = express.Router();
 

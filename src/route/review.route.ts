@@ -6,7 +6,7 @@ import {
   remove,
   updateRev,
 } from "../controllers/review.controller";
-import { allUser, onlyAdmin, onlyUser } from "../@types/gloabl.types";
+import { allUser, onlyAdmin, onlyUser } from "../@types/global.types";
 // import { get } from "mongoose";
 
 const router = express.Router();

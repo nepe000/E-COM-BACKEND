@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const gloabl_types_1 = require("../@types/gloabl.types");
+const global_types_1 = require("../@types/global.types");
 const authentication_middleware_1 = require("../middlewaare/authentication.middleware");
 const product_controller_1 = require("../controllers/product.controller");
 const multer_1 = __importDefault(require("multer"));
@@ -30,14 +30,14 @@ router.get("/", product_controller_1.getAll);
 // Get a product by ID (Fixed method)
 router.get("/:id", product_controller_1.getById);
 // Update a product (Fixed to include `/:id`)
-router.put("/:id", (0, authentication_middleware_1.Authenticate)(gloabl_types_1.allUser), upload.fields([
+router.put("/:id", (0, authentication_middleware_1.Authenticate)(global_types_1.allUser), upload.fields([
     { name: "coverImage", maxCount: 1 },
     { name: "images", maxCount: 6 },
 ]), product_controller_1.updatePro);
 // Delete a product
-router.delete("/:id", (0, authentication_middleware_1.Authenticate)(gloabl_types_1.onlyAdmin), product_controller_1.deletePro);
+router.delete("/:id", (0, authentication_middleware_1.Authenticate)(global_types_1.onlyAdmin), product_controller_1.deletePro);
 // Create a product
-router.post("/", (0, authentication_middleware_1.Authenticate)(gloabl_types_1.onlyAdmin), upload.fields([
+router.post("/", (0, authentication_middleware_1.Authenticate)(global_types_1.allUser), upload.fields([
     { name: "coverImage", maxCount: 1 },
     { name: "images", maxCount: 6 },
 ]), product_controller_1.create);

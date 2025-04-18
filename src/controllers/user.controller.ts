@@ -6,7 +6,7 @@ import { hash, compare } from "../utils/bcrypt.util";
 import { iPayload } from "../@types/jwt.interface";
 import { asyncHandler } from "../utils/aynchandler.utils";
 import CustomError from "../middlewaare/middleware";
-import { Role } from "../@types/gloabl.types";
+import { Role } from "../@types/global.types";
 import { getPaginationData } from "../utils/pagination.utils";
 
 // import { compare } from "bcryptjs";

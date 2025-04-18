@@ -6,7 +6,7 @@ import {
   updateOrderStatus,
 } from "../controllers/order.controller";
 import { Authenticate } from "../middlewaare/authentication.middleware";
-import { onlyUser } from "../@types/gloabl.types";
+import { onlyUser } from "../@types/global.types";
 const router = express.Router();
 
 //?create an order

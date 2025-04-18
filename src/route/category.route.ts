@@ -8,7 +8,7 @@ import {
   updateCat,
 } from "../controllers/category.controller";
 import { Authenticate } from "../middlewaare/authentication.middleware";
-import { onlyAdmin, onlyUser } from "../@types/gloabl.types";
+import { onlyAdmin, onlyUser } from "../@types/global.types";
 
 const router = express.Router();
 

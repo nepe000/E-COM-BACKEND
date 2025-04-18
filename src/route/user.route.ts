@@ -6,12 +6,12 @@ import {
   update,
 } from "../controllers/user.controller";
 import { Authenticate } from "../middlewaare/authentication.middleware";
-import { onlyAdmin, onlyUser, allUser } from "../@types/gloabl.types";
+import { onlyAdmin, onlyUser, allUser } from "../@types/global.types";
 
 const router = express.Router();
 
 //?register user
-router.post("/", Authenticate(allUser), register);
+router.post("/", register);
 
 //?update user
 router.put("/:id", Authenticate(allUser), update);

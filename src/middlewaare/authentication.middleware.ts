@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import CustomError from "./middleware";
-import { Role } from "../@types/gloabl.types";
+import { Role } from "../@types/global.types";
 import { verifyToken } from "../utils/jwt.util";
 import { JwtPayload } from "jsonwebtoken";
 import User from "../models/model";
@@ -36,7 +36,7 @@ export const Authenticate = (roles?: Role[]) => {
         throw new CustomError("User not found, Please register the user", 404);
       }
 
-      if (roles && !roles.includes(user.role)) {
+      if (roles && !roles.includes(user.role as Role)) {
         throw new CustomError(
           `Forbidden: ${user.role} cannot access this resource`,
           403
@@ -47,7 +47,7 @@ export const Authenticate = (roles?: Role[]) => {
         _id: decoded._id,
         firstName: decoded.firstName,
         lastName: decoded.lastName,
-        role: user.role,
+        role: user.role as Role,
         email: decoded.email,
       };
 

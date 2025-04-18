@@ -18,7 +18,7 @@ const jwt_util_1 = require("../utils/jwt.util");
 const bcrypt_util_1 = require("../utils/bcrypt.util");
 const aynchandler_utils_1 = require("../utils/aynchandler.utils");
 const middleware_1 = __importDefault(require("../middlewaare/middleware"));
-const gloabl_types_1 = require("../@types/gloabl.types");
+const global_types_1 = require("../@types/global.types");
 const pagination_utils_1 = require("../utils/pagination.utils");
 // import { compare } from "bcryptjs";
 exports.register = (0, aynchandler_utils_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -127,7 +127,7 @@ exports.getUsers = (0, aynchandler_utils_1.asyncHandler)((req, res) => __awaiter
             },
         ];
     }
-    filter.role = gloabl_types_1.Role.user;
+    filter.role = global_types_1.Role.user;
     let sortOptions = { createdAt: -1 }; // newest user sort
     if (sortBy &&
         ["createdAt", "lastLogin", "updatedAt"].includes(sortBy)) {

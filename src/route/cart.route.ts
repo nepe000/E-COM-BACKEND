@@ -1,6 +1,6 @@
 import express from "express";
 import { Authenticate } from "../middlewaare/authentication.middleware";
-import { onlyUser } from "../@types/gloabl.types";
+import { onlyUser } from "../@types/global.types";
 import {
   clearCart,
   create,

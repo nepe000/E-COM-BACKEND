@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const order_controller_1 = require("../controllers/order.controller");
 const authentication_middleware_1 = require("../middlewaare/authentication.middleware");
-const gloabl_types_1 = require("../@types/gloabl.types");
+const global_types_1 = require("../@types/global.types");
 const router = express_1.default.Router();
 //?create an order
-router.post("/", (0, authentication_middleware_1.Authenticate)(gloabl_types_1.onlyUser), order_controller_1.placeOrder);
+router.post("/", (0, authentication_middleware_1.Authenticate)(global_types_1.onlyUser), order_controller_1.placeOrder);
 //?get all order
 router.get("/", order_controller_1.getAllOrder);
 //?get order using userid
