@@ -5,8 +5,9 @@ import {
   createRev,
   remove,
   updateRev,
+  getReviewByIdProductId,
 } from "../controllers/review.controller";
-import { allUser, onlyAdmin, onlyUser } from "../@types/global.types";
+import { allUser, onlyUser } from "../@types/global.types";
 // import { get } from "mongoose";
 
 const router = express.Router();
@@ -18,5 +19,7 @@ router.get("/", allRev);
 router.patch("/:id", Authenticate(onlyUser), updateRev);
 
 router.delete("/:id", Authenticate(allUser), remove);
+
+router.get("/:id", getReviewByIdProductId);
 
 export default router;
