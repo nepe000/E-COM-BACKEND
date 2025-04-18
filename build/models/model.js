@@ -28,7 +28,7 @@ const userSchema = new mongoose_1.default.Schema({
     role: {
         type: String,
         enum: Object.values(global_types_1.Role),
-        default: global_types_1.Role.user,
+        default: global_types_1.Role.USER,
     },
     phoneNumber: {
         type: String,

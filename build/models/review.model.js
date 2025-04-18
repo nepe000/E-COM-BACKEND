@@ -19,7 +19,7 @@ const reviewSchema = new mongoose_1.default.Schema({
     user: {
         type: mongoose_1.default.Types.ObjectId,
         required: [true, "User is required"],
-        ref: "User",
+        ref: "user",
     },
     product: {
         type: mongoose_1.default.Types.ObjectId,
