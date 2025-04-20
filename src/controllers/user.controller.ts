@@ -106,6 +106,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
       status: "success",
       success: true,
       message: "Login success",
+      user,
       token,
     });
 });
@@ -137,7 +138,7 @@ export const getUsers = asyncHandler(async (req: Request, res: Response) => {
     ];
   }
 
-  filter.role = Role.user;
+  filter.role = Role.USER;
 
   let sortOptions: { [key: string]: 1 | -1 } = { createdAt: -1 }; // newest user sort
 

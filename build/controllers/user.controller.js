@@ -99,6 +99,7 @@ exports.login = (0, aynchandler_utils_1.asyncHandler)((req, res) => __awaiter(vo
         status: "success",
         success: true,
         message: "Login success",
+        user,
         token,
     });
 }));
@@ -127,7 +128,7 @@ exports.getUsers = (0, aynchandler_utils_1.asyncHandler)((req, res) => __awaiter
             },
         ];
     }
-    filter.role = global_types_1.Role.user;
+    filter.role = global_types_1.Role.USER;
     let sortOptions = { createdAt: -1 }; // newest user sort
     if (sortBy &&
         ["createdAt", "lastLogin", "updatedAt"].includes(sortBy)) {
