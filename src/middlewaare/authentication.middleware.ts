@@ -15,10 +15,7 @@ export const Authenticate = (roles?: Role[]) => {
         : req.headers["authorization"];
 
       if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        throw new CustomError(
-          "Unauthorized, authorization header is missing",
-          401
-        );
+        throw new CustomError("User isnt logged in , Login First", 401);
       }
 
       const access_token = authHeader.split(" ")[1];
