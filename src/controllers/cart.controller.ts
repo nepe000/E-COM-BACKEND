@@ -8,37 +8,41 @@ import Product from "../models/product.model";
 
 export const create = asyncHandler(async (req: Request, res: Response) => {
   const { productId, quantity } = req.body;
-  let cart;
 
   if (!productId) {
     throw new CustomError("Product ID is required", 404);
   }
 
-  cart = await Cart.findOne({ product: productId });
+  let cart = await Cart.findOne({ user: req.user._id });
 
   if (!cart) {
-    cart = new Cart({ product: productId, items: [] });
+    cart = new Cart({
+      user: req.user._id,
+      items: [],
+    });
   }
+
   const product = await Product.findById(productId);
   if (!product) {
     throw new CustomError("Product not found", 404);
   }
-  const existingProduct = cart.items.filter(
+
+  const existingItem = cart.items.find(
     (item) => item.product.toString() === productId
   );
-  if (existingProduct && existingProduct.length > 0) {
-    existingProduct[0].quantity += quantity;
-    cart.items.push(existingProduct);
+
+  if (existingItem) {
+    existingItem.quantity += quantity;
   } else {
     cart.items.push({ product: productId, quantity });
   }
-  cart.items.push({ product: productId, quantity });
-  await cart?.save();
+
+  await cart.save();
 
   res.status(201).json({
     status: "success",
     success: true,
-    message: "Product added to cart ",
+    message: "Product added to cart",
   });
 });
 

@@ -20,6 +20,6 @@ router.put("/:id", Authenticate(allUser), update);
 router.post("/login", login);
 
 //?get user
-router.get("/", Authenticate(allUser), getUsers);
+router.get("/", getUsers);
 
 export default router;

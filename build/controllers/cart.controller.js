@@ -19,32 +19,32 @@ const cart_model_1 = __importDefault(require("../models/cart.model"));
 const product_model_1 = __importDefault(require("../models/product.model"));
 exports.create = (0, aynchandler_utils_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { productId, quantity } = req.body;
-    let cart;
     if (!productId) {
         throw new middleware_1.default("Product ID is required", 404);
     }
-    cart = yield cart_model_1.default.findOne({ product: productId });
+    let cart = yield cart_model_1.default.findOne({ user: req.user._id });
     if (!cart) {
-        cart = new cart_model_1.default({ product: productId, items: [] });
+        cart = new cart_model_1.default({
+            user: req.user._id,
+            items: [],
+        });
     }
     const product = yield product_model_1.default.findById(productId);
     if (!product) {
         throw new middleware_1.default("Product not found", 404);
     }
-    const existingProduct = cart.items.filter((item) => item.product.toString() === productId);
-    if (existingProduct && existingProduct.length > 0) {
-        existingProduct[0].quantity += quantity;
-        cart.items.push(existingProduct);
+    const existingItem = cart.items.find((item) => item.product.toString() === productId);
+    if (existingItem) {
+        existingItem.quantity += quantity;
     }
     else {
         cart.items.push({ product: productId, quantity });
     }
-    cart.items.push({ product: productId, quantity });
-    yield (cart === null || cart === void 0 ? void 0 : cart.save());
+    yield cart.save();
     res.status(201).json({
         status: "success",
         success: true,
-        message: "Product added to cart ",
+        message: "Product added to cart",
     });
 }));
 exports.getCartByUserId = (0, aynchandler_utils_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
