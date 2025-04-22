@@ -24,7 +24,7 @@ const Authenticate = (roles) => {
                 ? req.headers["authorization"][0]
                 : req.headers["authorization"];
             if (!authHeader || !authHeader.startsWith("Bearer ")) {
-                throw new middleware_1.default("User isnt logged in , Login First", 401);
+                throw new middleware_1.default("User isn't logged in , Login First", 401);
             }
             const access_token = authHeader.split(" ")[1];
             if (!access_token) {

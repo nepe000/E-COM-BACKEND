@@ -32,8 +32,8 @@ exports.create = (0, aynchandler_utils_1.asyncHandler)((req, res) => __awaiter(v
     const existingProduct = user.wishList.find((list) => list.toString() === productId);
     if (!existingProduct) {
         user.wishList.push(productId);
+        yield user.save();
     }
-    yield user.save();
     res.status(201).json({
         status: "success",
         success: true,

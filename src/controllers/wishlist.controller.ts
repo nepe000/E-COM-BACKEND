@@ -25,8 +25,8 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
   );
   if (!existingProduct) {
     user.wishList.push(productId);
+    await user.save();
   }
-  await user.save();
   res.status(201).json({
     status: "success",
     success: true,
