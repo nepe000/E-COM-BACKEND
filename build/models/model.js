@@ -46,11 +46,9 @@ const userSchema = new mongoose_1.default.Schema({
     },
     wishList: [
         {
-            product: {
-                type: mongoose_1.default.Schema.Types.ObjectId,
-                required: true,
-                ref: "product",
-            },
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            required: true,
+            ref: "product",
         },
     ],
 }, { timestamps: true });

@@ -50,7 +50,9 @@ export const removeProductFromWishList = asyncHandler(
     if (!existingProduct) {
       throw new CustomError("Product does not exist in list", 404);
     }
-    user.wishList.pull(productId);
+    user.wishList = user.wishList.filter(
+      (list) => list.toString() !== productId
+    );
     await user.save();
     res.status(201).json({
       status: "success",

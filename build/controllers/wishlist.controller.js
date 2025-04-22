@@ -52,7 +52,7 @@ exports.removeProductFromWishList = (0, aynchandler_utils_1.asyncHandler)((req, 
     if (!existingProduct) {
         throw new middleware_1.default("Product does not exist in list", 404);
     }
-    user.wishList.pull(productId);
+    user.wishList = user.wishList.filter((list) => list.toString() !== productId);
     yield user.save();
     res.status(201).json({
         status: "success",
