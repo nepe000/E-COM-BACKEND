@@ -11,5 +11,5 @@ const router = express_1.default.Router();
 router.post("/add", (0, authentication_middleware_1.Authenticate)(global_types_1.onlyUser), cart_controller_1.create);
 router.post("/clear", (0, authentication_middleware_1.Authenticate)(global_types_1.onlyUser), cart_controller_1.clearCart);
 router.get("/:userId", (0, authentication_middleware_1.Authenticate)(global_types_1.onlyUser), cart_controller_1.getCartByUserId);
-router.delete("/remove/:productId", (0, authentication_middleware_1.Authenticate)(global_types_1.onlyUser), cart_controller_1.getCartByUserId);
+router.delete("/remove/:productId", (0, authentication_middleware_1.Authenticate)(global_types_1.onlyUser), cart_controller_1.removeItemFromCart);
 exports.default = router;

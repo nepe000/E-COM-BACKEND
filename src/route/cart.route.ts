@@ -5,6 +5,7 @@ import {
   clearCart,
   create,
   getCartByUserId,
+  removeItemFromCart,
 } from "../controllers/cart.controller";
 const router = express.Router();
 
@@ -14,6 +15,6 @@ router.post("/clear", Authenticate(onlyUser), clearCart);
 
 router.get("/:userId", Authenticate(onlyUser), getCartByUserId);
 
-router.delete("/remove/:productId", Authenticate(onlyUser), getCartByUserId);
+router.delete("/remove/:productId", Authenticate(onlyUser), removeItemFromCart);
 
 export default router;
