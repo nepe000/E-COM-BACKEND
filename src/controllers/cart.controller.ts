@@ -48,7 +48,7 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 
 export const getCartByUserId = asyncHandler(
   async (req: Request, res: Response) => {
-    const userId = req.params.id;
+    const userId = req.params._id;
     const cart = await Cart.findOne({ user: userId });
     res.status(200).json({
       status: "success",
