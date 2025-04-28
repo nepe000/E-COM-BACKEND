@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = exports.login = exports.update = exports.register = void 0;
+exports.getUsers = exports.adminLogin = exports.login = exports.update = exports.register = void 0;
 const model_1 = __importDefault(require("../models/model"));
 const jwt_util_1 = require("../utils/jwt.util");
 const bcrypt_util_1 = require("../utils/bcrypt.util");
@@ -75,6 +75,44 @@ exports.login = (0, aynchandler_utils_1.asyncHandler)((req, res) => __awaiter(vo
     }
     const user = yield model_1.default.findOne({ email: email });
     if (!user) {
+        throw new middleware_1.default("User not found, please register", 404);
+    }
+    const isMatch = yield (0, bcrypt_util_1.compare)(password, user.password);
+    if (!isMatch) {
+        throw new middleware_1.default("Incorrect password", 400);
+    }
+    const payload = {
+        _id: user._id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+    };
+    const token = (0, jwt_util_1.generateToken)(payload);
+    res
+        .cookie("access_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+    })
+        .status(200)
+        .json({
+        status: "success",
+        success: true,
+        message: "Login success",
+        user,
+        token,
+    });
+}));
+exports.adminLogin = (0, aynchandler_utils_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = req.body;
+    if (!email) {
+        throw new middleware_1.default("Email is required", 400);
+    }
+    if (!password) {
+        throw new middleware_1.default("Password is required", 400);
+    }
+    const user = yield model_1.default.findOne({ email: email });
+    if (!user || (user === null || user === void 0 ? void 0 : user.role) !== global_types_1.Role.ADMIN) {
         throw new middleware_1.default("User not found, please register", 404);
     }
     const isMatch = yield (0, bcrypt_util_1.compare)(password, user.password);

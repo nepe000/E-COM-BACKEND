@@ -110,6 +110,48 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
       token,
     });
 });
+export const adminLogin = asyncHandler(async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  if (!email) {
+    throw new CustomError("Email is required", 400);
+  }
+  if (!password) {
+    throw new CustomError("Password is required", 400);
+  }
+
+  const user = await User.findOne({ email: email });
+  if (!user || user?.role !== Role.ADMIN) {
+    throw new CustomError("User not found, please register", 404);
+  }
+
+  const isMatch = await compare(password, user.password);
+  if (!isMatch) {
+    throw new CustomError("Incorrect password", 400);
+  }
+
+  const payload: iPayload = {
+    _id: user._id,
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    role: user.role,
+  };
+  const token = generateToken(payload);
+
+  res
+    .cookie("access_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    })
+    .status(200)
+    .json({
+      status: "success",
+      success: true,
+      message: "Login success",
+      user,
+      token,
+    });
+});
 
 export const getUsers = asyncHandler(async (req: Request, res: Response) => {
   console.log(req.user);
