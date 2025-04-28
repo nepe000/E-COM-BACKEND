@@ -14,7 +14,7 @@ router.post("/", user_controller_1.register);
 router.put("/:id", (0, authentication_middleware_1.Authenticate)(global_types_1.allUser), user_controller_1.update);
 //?login user
 router.post("/login", user_controller_1.login);
-router.post("/admin/login", user_controller_1.adminLogin);
+router.post("/user/admin/login", user_controller_1.adminLogin);
 //?get user
 router.get("/", user_controller_1.getUsers);
 exports.default = router;

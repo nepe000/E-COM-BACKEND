@@ -19,7 +19,7 @@ router.put("/:id", Authenticate(allUser), update);
 
 //?login user
 router.post("/login", login);
-router.post("/admin/login", adminLogin);
+router.post("/user/admin/login", adminLogin);
 
 //?get user
 router.get("/", getUsers);
