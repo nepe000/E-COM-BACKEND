@@ -19,10 +19,7 @@ const order_routes_1 = __importDefault(require("./route/order.routes"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)({
-    origin: "http://localhost:3000", // or your deployed frontend URL
-    credentials: true,
-}));
+app.use((0, cors_1.default)({ origin: "*" }));
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
 app.use("/api/uploads", express_1.default.static(path_1.default.join(__dirname, "../", "uploads")));
