@@ -15,8 +15,12 @@ import cors from "cors";
 
 import path from "path";
 const app = express();
-
-app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: "http://localhost:3000", // or your deployed frontend URL
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/api/uploads", express.static(path.join(__dirname, "../", "uploads")));
