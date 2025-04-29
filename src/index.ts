@@ -16,7 +16,7 @@ import cors from "cors";
 import path from "path";
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/api/uploads", express.static(path.join(__dirname, "../", "uploads")));
