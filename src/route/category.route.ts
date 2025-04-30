@@ -16,7 +16,7 @@ const router = express.Router();
 router.get("/", allCat);
 
 //? Create a new category
-router.post("/", Authenticate(onlyUser), create);
+router.post("/", Authenticate(onlyAdmin), create);
 
 //? Update a category
 router.patch("/:id", Authenticate(onlyUser), updateCat);

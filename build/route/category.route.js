@@ -12,7 +12,7 @@ const router = express_1.default.Router();
 //? Get all categories
 router.get("/", category_controller_1.allCat);
 //? Create a new category
-router.post("/", (0, authentication_middleware_1.Authenticate)(global_types_1.onlyUser), category_controller_1.create);
+router.post("/", (0, authentication_middleware_1.Authenticate)(global_types_1.onlyAdmin), category_controller_1.create);
 //? Update a category
 router.patch("/:id", (0, authentication_middleware_1.Authenticate)(global_types_1.onlyUser), category_controller_1.updateCat);
 //?remove category by id
