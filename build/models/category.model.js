@@ -14,6 +14,6 @@ const categorySchema = new mongoose_1.default.Schema({
         type: String,
         required: false,
     },
-});
+}, { timestamps: true });
 const Category = mongoose_1.default.model("category", categorySchema);
 exports.default = Category;
