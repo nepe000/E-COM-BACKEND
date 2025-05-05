@@ -10,25 +10,27 @@ import {
 } from "../controllers/product.controller";
 import multer from "multer";
 import fs from "fs";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { cloudinary } from "../config/cloudinary.config";
 
+const router = express.Router();
 // Ensure upload directory exists
 const uploadDir = "./uploads";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + file.originalname);
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: async (req, file) => {
+    return {
+      folder: "ecom/products",
+      allowed_formats: ["jpeg", "webp", "jpg", "png", "svg"],
+    };
   },
 });
 
 const upload = multer({ storage: storage });
-const router = express.Router();
 
 // Get all products
 router.get("/", getAll);

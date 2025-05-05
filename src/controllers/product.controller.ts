@@ -22,11 +22,13 @@ export const create = asyncHandler(
     }
     const coverImage = files.coverImage;
     const images = files.images;
+
     // get category
     const category = await Category.findById(categoryId);
     if (!category) {
       throw new CustomError("category not found", 404);
     }
+
     const product = new Product({
       name,
       price,
@@ -34,16 +36,24 @@ export const create = asyncHandler(
       createdBy: admin._id,
       category: category._id,
     });
-    product.coverImage = coverImage[0]?.path;
+
+    product.coverImage = {
+      path: coverImage[0].path,
+      public_id: coverImage[0].fieldname,
+    } as any;
 
     if (images && images.length > 0) {
-      const imagePath: string[] = images.map(
-        (image: any, index: number) => image.path
-      );
-      product.images = imagePath;
+      const imagePaths = images.map((image: any, index: number) => ({
+        path: image.path,
+        public_id: image.fieldname,
+      }));
+
+      product.images = imagePaths as any;
     }
+
     await product.save();
     // console.log(req.file);
+
     res.status(200).json({
       status: "success",
       success: true,
@@ -130,20 +140,29 @@ export const updatePro = asyncHandler(
 
     // Delete cover image if provided
     if (coverImage) {
-      await deleteFiles([updatedProduct.coverImage as string]);
+      await deleteFiles([updatedProduct.coverImage as any]);
+      updatedProduct.coverImage = {
+        path: coverImage[0].path,
+        public_id: coverImage[0].fieldname,
+      } as any;
     }
 
     // Delete selected images
     if (deletedImages && deletedImages.length > 0) {
       await deleteFiles(deletedImages);
       updatedProduct.images = (updatedProduct.images || []).filter(
-        (image) => !deletedImages.includes(image)
+        (image) => !deletedImages.includes(image.public_id)
       );
     }
 
     // Add new images if provided
     if (images && images.length > 0) {
-      const imagePath: string[] = images.map((image) => image.path);
+      const imagePath = images.map((image) => {
+        return {
+          path: image.path,
+          public_id: image.filename,
+        };
+      });
       updatedProduct.images = [...(updatedProduct.images || []), ...imagePath];
     }
 
@@ -162,15 +181,24 @@ export const deletePro = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     const id = req.params.id;
 
-    const product = await Product.findByIdAndDelete(id);
+    const product = await Product.findById(id);
 
     if (!product) {
       throw new CustomError("Product is not here", 404);
     }
-    if (product.images && product.images.length > 0) {
-      await deleteFiles(product.images as string[]);
+
+    if (product.coverImage && product.coverImage.length > 0) {
+      const coverImageIds = product.coverImage.map((img) => img.public_id);
+      await deleteFiles(coverImageIds);
     }
-    await Product.findByIdAndDelete(product._id);
+
+    // Handle product images
+    if (product.images && product.images.length > 0) {
+      const imageIds = product.images.map((img) => img.public_id);
+      await deleteFiles(imageIds);
+    }
+
+    await Product.findByIdAndDelete(id);
 
     res.status(200).json({
       status: "success",
@@ -180,7 +208,6 @@ export const deletePro = asyncHandler(
     });
   }
 );
-
 export const getById = asyncHandler(async (req: Request, res: Response) => {
   const id = req.params.id;
   const product = await Product.findById(id).populate("createdBy");
